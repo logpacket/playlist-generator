@@ -20,6 +20,10 @@ async function getContentList(search){
             const songIdData = $(el)
             .find("td:nth-child(3) div  div  a.btn.btn_icon_detail")
             .attr('href');
+
+            const artistData = $(el)
+            .find("#artistName > a")
+            .text();
             const titleData = $(el)
             .find("td:nth-child(3) div div a.fc_gray b")
             .text();
@@ -30,6 +34,7 @@ async function getContentList(search){
 
             contentList[i] ={
                 songId : songIdRegex.exec(songIdData)[0],
+                artist : artistData,
                 title : titleData,
                 album :albumData
             };
