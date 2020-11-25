@@ -1,9 +1,12 @@
 import axios from "axios";
 import cheerio from "cheerio";
 
-async function getHtml(search){
+async function getHtml(search, detail){
     try{
-        return await axios.get("https://www.melon.com/search/song/index.htm?q="+search);
+        if(!detail)
+            return await axios.get("https://www.melon.com/search/song/index.htm?q="+search);
+        else
+            return await axios.get("https://www.melon.com/song/detail.htm?songId="+search);
     } catch (e){
         console.error(e);
     }
@@ -45,4 +48,29 @@ async function getContentList(search){
     }
 }
 
-export {getContentList};
+async function getContentDetail(songObject){
+    try{
+        const html = await getHtml(songObject.songId, true);
+        const $ = cheerio.load(html.data);
+        const imageUrl = $("#downloadfrm > div > div > div.thumb > a > img").attr('src');
+        const genre = $("#downloadfrm > div > div > div.entry > div.meta > dl > dd:nth-child(6)")
+        .text();
+
+        return {
+            songId : songObject.songId,
+            artist : songObject.artist,
+            title : songObject.title,
+            album : songObject.album,
+            imageUrl : imageUrl,
+            genre : genre
+        }
+    }catch(e){
+        console.error(e);
+    }
+}
+
+async function generatePlaylist(songId){
+    return 'melonapp://play/?ctype=1&menuid=0&cid=' + songId;
+}
+
+export {getContentList, getContentDetail, generatePlaylist};
