@@ -1,2 +1,2 @@
 # playlist-generator
-oneclick playlist generator for melon, genie, etc...
+oneclick playlist generator for melon
