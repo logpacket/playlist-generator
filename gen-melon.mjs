@@ -16,7 +16,7 @@ async function getContentList(search){
     try{
         const songIdRegex = /[0-9]{8}/
         const contentList =[];
-        const html = await getHtml(search);
+        const html = getHtml(search);
         const $ = cheerio.load(html.data);
         const tableList = $("#frm_defaultList > div > table > tbody").children("tr");
         tableList.each((i, el)=>{
