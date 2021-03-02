@@ -12,7 +12,7 @@ async function getHtml(search, detail){
     }
 }
 
-async function getContentList(search){
+function getContentList(search){
     try{
         const songIdRegex = /[0-9]{8}/
         const contentList =[];
