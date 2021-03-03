@@ -14,6 +14,7 @@ async function getHtml(search, detail){
 
 function getContentList(search){
     try{
+        search = encodeURI(search)
         const songIdRegex = /[0-9]{8}/
         const contentList =[];
         const html = getHtml(search);
